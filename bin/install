@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# shellcheck source=../lib/defs.sh
+. "$(dirname "$0")/../lib/defs.sh"
+
+wrapper_dir="$ASDF_INSTALL_PATH/bin"
+target_wrapper_file="$wrapper_dir/$wrapper_file"
+share_dir="$(dirname "$0")/../share"
+
+if [ -n "${ASDF_DOWNLOAD_PATH-}" ]; then 
+    cp "$ASDF_DOWNLOAD_PATH/$jar_file" "$ASDF_INSTALL_PATH/$jar_file"
+else
+    ASDF_DOWNLOAD_PATH="$ASDF_INSTALL_PATH/$jar_file" "$(dirname "$0")/download"
+fi
+
+# Install the JAR wrapper script
+mkdir -p "$wrapper_dir"
+replace_in_text '@jar_file@' "$jar_file" > "$target_wrapper_file" < "$share_dir/$wrapper_file"
+chmod a+x "$target_wrapper_file"

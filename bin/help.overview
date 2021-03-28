@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo '
+Manages versions of the TigerVNC Java Viewer. It downloads jar files
+from BinTray and creates a wrapper script that runs it using the Java VM
+in the PATH.
+
+Additionally, it supports desktop integration via the custom "integrate"
+and "unintegrate" commands. "integrate" creates a desktop file and an
+icon for each installed viewer version. "unintegrate" removes them all,
+including files for versions that no longer installed.
+'

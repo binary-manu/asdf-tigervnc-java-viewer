@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=TigerVNC Java Viewer @version@
+Comment=The TigerVNC Java Viewer
+Type=Application
+Categories=Network;
+Exec=@wrapper_file@
+Icon=asdf-@plugin@-@version@

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# shellcheck source=../lib/defs.sh
+. "$(dirname "$0")/../lib/defs.sh"
+
+target="$ASDF_DOWNLOAD_PATH/$jar_file"
+source="https://bintray.com/tigervnc/stable/download_file?file_path=VncViewer-$ASDF_INSTALL_VERSION.jar"
+
+[ "$ASDF_INSTALL_TYPE" = "version" ] || { echo "$plugin: can only handle version installations" >&2; exit 1; }
+
+echo "$plugin: downloading version $ASDF_INSTALL_VERSION"
+curl -L "$source" > "$target" || { rm -f "$target"; echo "$plugin: download failed" >&2; exit 1; }
