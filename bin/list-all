@@ -5,7 +5,7 @@ set -euo pipefail
 releases_url='https://api.github.com/repos/TigerVNC/tigervnc/releases'
 
 get_github_versions() {
-  curl -sL "$releases_url" |
+  curl -sL ${GITHUB_API_TOKEN:+-H "Authorization: token $GITHUB_API_TOKEN"} "$releases_url" |
     grep -oE '"tag_name"[[:blank:]]*:[[:blank:]]*"([^"]+)"' |
     cut -d '"' -f 4 | cut -c 2-
 }
