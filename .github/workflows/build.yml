@@ -1,13 +1,12 @@
 name: Test
 on:
-  pull_request:
-    paths-ignore:
-      - "**.md"
   push:
     paths-ignore:
       - "**.md"
-  schedule:
-    - cron: "0 0 * * *" # daily at midnight
+      - LICENSE
+    branches:
+      - ci
+      - master
 
 jobs:
   plugin_test:
