@@ -21,6 +21,7 @@ asdf list "$plugin" | while read -r version; do
     chmod a+x "$target_desktop_file"
 
     cp "$share_dir/$icon_file" "$target_icon_file"
-    gtk-update-icon-cache
-    update-desktop-database "$HOME/.local/share/applications/"
 done
+
+gtk-update-icon-cache -t -q "$HOME/.local/share/icons/hicolor/"
+update-desktop-database "$HOME/.local/share/applications/"
