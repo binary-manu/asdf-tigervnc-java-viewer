@@ -6,7 +6,7 @@ set -euo pipefail
 . "$(dirname "$0")/../lib/defs.sh"
 
 target="$ASDF_DOWNLOAD_PATH/$jar_file"
-source="https://bintray.com/tigervnc/stable/download_file?file_path=VncViewer-$ASDF_INSTALL_VERSION.jar"
+source="https://dl.bintray.com/tigervnc/stable/VncViewer-$ASDF_INSTALL_VERSION.jar"
 
 [ "$ASDF_INSTALL_TYPE" = "version" ] || { echo "$plugin: can only handle version installations" >&2; exit 1; }
 
