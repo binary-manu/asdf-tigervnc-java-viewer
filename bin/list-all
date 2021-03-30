@@ -2,12 +2,15 @@
 
 set -euo pipefail
 
-releases_url='https://api.github.com/repos/TigerVNC/tigervnc/releases'
+releases_url='https://bintray.com/api/v1/packages/tigervnc/stable/tigervnc'
 
-get_github_versions() {
-  curl -sL ${GITHUB_API_TOKEN:+-H "Authorization: token $GITHUB_API_TOKEN"} "$releases_url" |
-    grep -oE '"tag_name"[[:blank:]]*:[[:blank:]]*"([^"]+)"' |
-    cut -d '"' -f 4 | cut -c 2-
+get_bintray_versions() {
+  curl -sL "$releases_url" |
+    tr '\n' ' ' |
+    grep -o '"versions"[[:space:]]*:[[:space:]]*\[[^]]*\]' |
+    grep -o '\[[^]]*\]' |
+    tr -d '[]"[:space:]' |
+    tr ',' '\n'
 }
 
 # stolen from https://github.com/rbenv/ruby-build/pull/631/files#diff-fdcfb8a18714b33b07529b7d02b54f1dR942
@@ -16,4 +19,4 @@ sort_versions() {
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
-echo $(get_github_versions | sort_versions)
+echo $(get_bintray_versions | sort_versions)
