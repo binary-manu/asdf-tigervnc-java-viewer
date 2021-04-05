@@ -6,4 +6,6 @@ set -euo pipefail
 . "$(dirname "$0")/../lib/defs.sh"
 
 asdf "$plugin" unintegrate "$ASDF_INSTALL_VERSION"
+
+exec > >(log_stream) 2> >(error_stream)
 rm -rf "$ASDF_INSTALL_PATH"

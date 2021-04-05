@@ -4,6 +4,7 @@ set -euo pipefail
 
 # shellcheck source=../lib/defs.sh
 . "$(dirname "$0")/../lib/defs.sh"
+exec > >(log_stream) 2> >(error_stream)
 
 wrapper_dir="$ASDF_INSTALL_PATH/bin"
 target_wrapper_file="$wrapper_dir/$wrapper_file"

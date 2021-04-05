@@ -4,6 +4,7 @@ set -euo pipefail
 
 # shellcheck source=../lib/defs.sh
 . "$(dirname "$0")/../lib/defs.sh"
+exec > >(log_stream) 2> >(error_stream)
 
 target="$ASDF_DOWNLOAD_PATH/$jar_file"
 
@@ -17,7 +18,7 @@ case "$ASDF_INSTALL_VERSION" in
     ;;
 esac
 
-[ "$ASDF_INSTALL_TYPE" = "version" ] || { echo "$plugin: can only handle version installations" >&2; exit 1; }
+[ "$ASDF_INSTALL_TYPE" = "version" ] || { error "can only handle version installations"; exit 1; }
 
-echo "$plugin: downloading version $ASDF_INSTALL_VERSION"
-curl -L "$source" > "$target" || { rm -f "$target"; echo "$plugin: download failed" >&2; exit 1; }
+log "downloading version $ASDF_INSTALL_VERSION"
+curl -L "$source" > "$target" || { rm -f "$target"; error "download failed"; exit 1; }

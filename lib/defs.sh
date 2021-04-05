@@ -11,6 +11,22 @@ jar_file='tigervnc.jar'
 # shellcheck disable=SC2034
 wrapper_file="tigervnc"
 
+log() {
+    echo "$@"
+}
+
+log_stream() {
+    while read -r f; do echo "$plugin: $f"; done
+}
+
+error() {
+    echo "$@" >&2
+}
+
+error_stream() {
+    log_stream >&2
+}
+
 replace_in_text() {
     (
         set -euo pipefail
