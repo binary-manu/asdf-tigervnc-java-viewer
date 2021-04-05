@@ -6,22 +6,26 @@ set -euo pipefail
 . "$(dirname "$0")/../defs.sh"
 share_dir="$(dirname "$0")/../../share"
 
-asdf list "$plugin" | while read -r version; do
+case "$#" in
+0)
+    asdf list "$plugin" | while read -r version; do
+        echo "$plugin: creating desktop entry for version $version"
+        desktop_integrate "$version"
+    done
+    ;;
+1)
+    version="$1"
+    if ! asdf where "$plugin" "$version" > /dev/null 2>&1; then
+        echo "$plugin: version $version is not installed" >&2
+        exit 1
+    fi
     echo "$plugin: creating desktop entry for version $version"
-    target_icon_file="$HOME/.local/share/icons/hicolor/64x64/apps/asdf-$plugin-$version.png"
-    target_desktop_file="$HOME/.local/share/applications/asdf-$plugin-$version.desktop"
+    desktop_integrate "$version"
+    ;;
+*)
+    echo "$plugin: integrate requires 0 or 1 arguments, $# given" >&2
+    exit 1
+    ;;
+esac
 
-    install -d "$(dirname "$target_icon_file")"
-    install -d "$(dirname "$target_desktop_file")"
-
-    exec_path="$(echo -n "$(asdf where "$plugin" "$version")/bin/$wrapper_file" | escape_for_desktop_entry)"
-    replace_in_text '@version@' "$version" < "$share_dir/$desktop_file" |
-        replace_in_text '@plugin@' "$plugin" |
-        replace_in_text '@wrapper_file@' "$exec_path" > "$target_desktop_file"
-    chmod a+x "$target_desktop_file"
-
-    cp "$share_dir/$icon_file" "$target_icon_file"
-done
-
-gtk-update-icon-cache -t -q "$HOME/.local/share/icons/hicolor/"
-update-desktop-database "$HOME/.local/share/applications/"
+desktop_db_update

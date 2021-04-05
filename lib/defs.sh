@@ -13,7 +13,7 @@ wrapper_file="tigervnc"
 
 replace_in_text() {
     (
-        set -eo pipefail
+        set -euo pipefail
 
         local pattern="$1"
         local replacement="$2"
@@ -35,7 +35,7 @@ escape_for_desktop_entry() {
     # Note that \ is escaped twice, as per:
     # https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#recognized-keys
     (
-        set -eo pipefail
+        set -euo pipefail
 
         printf '"' &&
         replace_in_text '\\' '\\' |
@@ -53,3 +53,30 @@ escape_for_desktop_entry() {
         printf '"'
     )
 }
+
+desktop_integrate() { (
+    set -euo pipefail
+
+    local version="${1?-desktop_integrate needs a version}"
+    local target_icon_file="$HOME/.local/share/icons/hicolor/64x64/apps/asdf-$plugin-$version.png"
+    local target_desktop_file="$HOME/.local/share/applications/asdf-$plugin-$version.desktop"
+
+    install -d "$(dirname "$target_icon_file")"
+    install -d "$(dirname "$target_desktop_file")"
+
+    local exec_path="$(echo -n "$(asdf where "$plugin" "$version")/bin/$wrapper_file" | escape_for_desktop_entry)"
+    replace_in_text '@version@' "$version" < "$share_dir/$desktop_file" |
+        replace_in_text '@plugin@' "$plugin" |
+        replace_in_text '@wrapper_file@' "$exec_path" > "$target_desktop_file"
+    chmod a+x "$target_desktop_file"
+
+    cp "$share_dir/$icon_file" "$target_icon_file"
+); }
+
+
+desktop_db_update() { (
+    set -euo pipefail
+
+    gtk-update-icon-cache -t -q "$HOME/.local/share/icons/hicolor/"
+    update-desktop-database "$HOME/.local/share/applications/"
+); }
