@@ -25,22 +25,33 @@ DE via a menu entry. Two additional, optional commands, can do this:
 
 * `integrate` creates a `.desktop` file for every installed viewer
   version. Each version also gets its own copy of the icon, to avoid
-  having to track the last user before deleting it;
+  having to track the last user before deleting it. Since v0.1.2, it is
+  also possible to specify a version to integrate:
+
+  ```sh
+  # Integrate all installed versions
+  asdf tigervnc-java-viewer integrate
+  # Integrate just 1.2.3
+  asdf tigervnc-java-viewer integrate 1.2.3
+  ```
+
+  Desktop integration is idemptotent: calling the command multiple times
+  simply recreates identical files.
+
 * `unintegrate` deletes all icons and desktop files belonging to the
   viewers. The deletion is done by name matching, so it will also clear
-  entries for versions that have been uninstalled.
+  entries for versions that have been uninstalled. Since v0.1.2, it is
+  also possible to specify a version to unintegrate:
 
-Currently, there is no way to integrate or unintegrate specific
-versions, but calling:
+  ```sh
+  # Unintegrate all versions and clean potential leftovers
+  asdf tigervnc-java-viewer unintegrate
+  # Unintegrate just 1.2.3
+  asdf tigervnc-java-viewer unintegrate 1.2.3
+  ```
 
-```sh
-asdf tigervnc-java-viewer unintegrate
-asdf tigervnc-java-viewer integrate
-```
-
-will always resync things according to the installed versions and should
-always be run after an install or an uninstall, if integration is used
-at all.
+Since v0.1.2, uninstalling a version, or removing the plugin, will
+automatically remove the corresponding desktop entries.
 
 ## TL;DR
 
