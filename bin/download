@@ -21,4 +21,4 @@ esac
 [ "$ASDF_INSTALL_TYPE" = "version" ] || { error "can only handle version installations"; exit 1; }
 
 log "downloading version $ASDF_INSTALL_VERSION"
-curl -L "$source" > "$target" || { rm -f "$target"; error "download failed"; exit 1; }
+curl --no-progress-meter -L "$source" > "$target" || { rm -f "$target"; error "download failed"; exit 1; }
