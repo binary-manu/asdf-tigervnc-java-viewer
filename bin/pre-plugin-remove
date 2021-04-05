@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# shellcheck source=../lib/defs.sh
+. "$(dirname "$0")/../lib/defs.sh"
+
+asdf "$plugin" unintegrate
