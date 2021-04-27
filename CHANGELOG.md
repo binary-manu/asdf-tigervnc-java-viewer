@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+* Get releases from github.com/accetto/tigervnc, since BinTray is being
+  decommissioned.
+* Rename the wrapper script to `vncviewer` to match the name of the native
+  client.
+
+### Fixed
+
+* Improve download error handling so that non-existent versions do
+  trigger errors.
+
 ## [0.1.2] - 2021-04-05
 
 ### Added
