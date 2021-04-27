@@ -2,15 +2,13 @@
 
 set -euo pipefail
 
-releases_url='https://bintray.com/api/v1/packages/tigervnc/stable/tigervnc'
+releases_url='https://github.com/accetto/tigervnc'
 
-get_bintray_versions() {
-  curl -sL "$releases_url" |
-    tr '\n' ' ' |
-    grep -o '"versions"[[:space:]]*:[[:space:]]*\[[^]]*\]' |
-    grep -o '\[[^]]*\]' |
-    tr -d '[]"[:space:]' |
-    tr ',' '\n'
+list_github_tags() {
+  # Only releases ending with "-mirror" have binaries attached
+  git ls-remote --tags --refs "$releases_url" |
+    grep -o 'refs/tags/v.*-mirror' | cut -d/ -f3- |
+    sed -ne 's/v\(.*\)-mirror/\1/p'
 }
 
 # stolen from https://github.com/rbenv/ruby-build/pull/631/files#diff-fdcfb8a18714b33b07529b7d02b54f1dR942
@@ -19,4 +17,4 @@ sort_versions() {
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
-echo $(get_bintray_versions | sort_versions)
+echo $(list_github_tags | sort_versions)
