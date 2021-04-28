@@ -11,6 +11,12 @@ target_wrapper_file="$wrapper_dir/$wrapper_file"
 share_dir="$(dirname "$0")/../share"
 
 if [ -n "${ASDF_DOWNLOAD_PATH-}" ]; then 
+    # Workaround to https://github.com/asdf-vm/asdf/issues/886 
+    # If the download fails, the download script will leave no file
+    # and print an error, so we can just bail out silently here.
+    if [ ! -f "$ASDF_DOWNLOAD_PATH/$jar_file" ]; then
+        exit 1
+    fi
     cp "$ASDF_DOWNLOAD_PATH/$jar_file" "$ASDF_INSTALL_PATH/$jar_file"
 else
     ASDF_DOWNLOAD_PATH="$ASDF_INSTALL_PATH/$jar_file" "$(dirname "$0")/download"
