@@ -9,7 +9,7 @@ desktop_file='tigervnc.desktop'
 # shellcheck disable=SC2034
 jar_file='tigervnc.jar'
 # shellcheck disable=SC2034
-wrapper_file="tigervnc"
+wrapper_file="vncviewer"
 
 log() {
     echo "$@"

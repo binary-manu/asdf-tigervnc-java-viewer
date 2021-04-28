@@ -23,4 +23,4 @@ jobs:
           java-package: jre
       - uses: asdf-vm/actions/plugin-test@v1
         with:
-          command: eval tigervnc -? 2>&1 | grep X509Vnc
+          command: eval vncviewer -? 2>&1 | grep X509Vnc
