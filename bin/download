@@ -8,7 +8,7 @@ exec > >(log_stream) 2> >(error_stream)
 
 target="$ASDF_DOWNLOAD_PATH/$jar_file"
 source="https://github.com/accetto/tigervnc/releases/download/v$ASDF_INSTALL_VERSION-mirror/VncViewer-$ASDF_INSTALL_VERSION.jar"
-curl_opts=(-L --no-progress-meter)
+curl_opts=(-fL --no-progress-meter)
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
   curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -16,4 +16,4 @@ fi
 [ "$ASDF_INSTALL_TYPE" = "version" ] || { error "can only handle version installations"; exit 1; }
 
 log "downloading version $ASDF_INSTALL_VERSION"
-curl "${curl_opts[@]}" "$source" > "$target" || { rm -f "$target"; error "download failed"; exit 1; }
+curl "${curl_opts[@]}" "$source" -o "$target" || { rm -f "$target"; error "download failed"; exit 1; }
