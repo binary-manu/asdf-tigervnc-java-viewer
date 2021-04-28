@@ -8,9 +8,10 @@ TigerVNC Java Viewer, released upstream as jar files.
 ## Usage
 
 For each jar version, the plugin will download it, then create a `bin`
-folder with a shell script named `tigervnc` that wraps a call to the jar
-file, passing it any additional parameters. This wrapper will be
-automatically picked by `asdf` and added to the shims.
+folder with a shell script named `vncviewer` (this was named `tigervnc`
+in `v0.1.x`) that wraps a call to the jar file, passing it any
+additional parameters. This wrapper will be automatically picked by
+`asdf` and added to the shims.
 
 Installing a version requires common POSIX tools like `sed`, `grep`,
 `tr`. Running a version will additionally require a JRE to run `java`.
@@ -53,6 +54,24 @@ DE via a menu entry. Two additional, optional commands, can do this:
 Since v0.1.2, uninstalling a version, or removing the plugin, will
 automatically remove the corresponding desktop entries.
 
+## About BinTray deprecation
+
+The TigerVNC project has been storing its binary artifacts at
+[BinTray][bintray]. This service has been deprecated and will be shut
+down, with the deadline being May 1st 2021.
+
+All versions of this plugin prior to `v0.2.0` grabbed files from BinTray
+and, therefore, will stop working after the date above.
+
+Meanwhile, GitHub user @accetto stepped up and created a [distribution
+mirror][accetto-tigervnc] to host a subset of the TigerVNC binaries,
+unless the maintainers figure out an alternative hosting solution.
+
+Therefore, for the time being, the TigerVNC Java Viewer will be
+downloaded from GitHub until the binaries find a new home. This will
+limit the available versions to what is available in that repo.
+Currently, this means `v1.8.0` and above.
+
 ## TL;DR
 
 ```sh
@@ -62,5 +81,7 @@ asdf install tigervnc-java-viewer latest
 asdf tigervnc-java-viewer integrate
 ```
 
+[accetto-tigervnc]: https://github.com/accetto/tigervnc
+[bintray]: https://bintray.com 
 
 <!-- vi: set tw=72 et sw=2 fo=tcroqan autoindent: -->
