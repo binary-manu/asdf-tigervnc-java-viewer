@@ -2,13 +2,13 @@
 
 set -euo pipefail
 
-releases_url='https://github.com/accetto/tigervnc'
+releases_url='https://github.com/TigerVNC/tigervnc'
 
 list_github_tags() {
-  # Only releases ending with "-mirror" have binaries attached
+  # Exclude versions ending with ".90"
   git ls-remote --tags --refs "$releases_url" |
-    grep -o 'refs/tags/v.*-mirror' | cut -d/ -f3- |
-    sed -ne 's/v\(.*\)-mirror/\1/p'
+    grep -o 'refs/tags/v.*' | cut -d/ -f3- |
+    grep -v '\.90$' | sed -ne 's/v\(.*\)/\1/p'
 }
 
 # stolen from https://github.com/rbenv/ruby-build/pull/631/files#diff-fdcfb8a18714b33b07529b7d02b54f1dR942
@@ -17,4 +17,10 @@ sort_versions() {
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
-echo $(list_github_tags | sort_versions)
+skip_unwanted() {
+  # Skip versions which are tagged on GH but have no binaries on SF.
+  # This means we keep v1.3.1 and above.
+  sed -n '/1\.3\.1/,$p'
+}
+
+echo $(list_github_tags | sort_versions | skip_unwanted)
