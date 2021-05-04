@@ -54,23 +54,30 @@ DE via a menu entry. Two additional, optional commands, can do this:
 Since v0.1.2, uninstalling a version, or removing the plugin, will
 automatically remove the corresponding desktop entries.
 
-## About BinTray deprecation
+## TigerVNC hosting vs plugin versions
 
-The TigerVNC project has been storing its binary artifacts at
-[BinTray][bintray]. This service has been deprecated and will be shut
-down, with the deadline being May 1st 2021.
+### `v0.1.x`
 
-All versions of this plugin prior to `v0.2.0` grabbed files from BinTray
-and, therefore, will stop working after the date above.
+All TigerVNC Java Viewer versions are grabbed from BinTray. This service
+has been deprecated and will be shut down, with the deadline being May
+1st 2021.  After that date you must upgrade to at least `v0.2.0` to be
+able to download files.
 
-Meanwhile, GitHub user @accetto stepped up and created a [distribution
-mirror][accetto-tigervnc] to host a subset of the TigerVNC binaries,
-unless the maintainers figure out an alternative hosting solution.
+### `v0.2.x`
 
-Therefore, for the time being, the TigerVNC Java Viewer will be
-downloaded from GitHub until the binaries find a new home. This will
-limit the available versions to what is available in that repo.
-Currently, this means `v1.8.0` and above.
+After BinTray retirement, but before the TigerVNC developers decided
+where to store releases, GitHub user _accetto_ stepped up and created a
+[distribution mirror][accetto-tigervnc] to host a subset of the TigerVNC
+binaries, The `v0.2.x` branch of this plugin uses this repository to
+fetch the viewer.
+
+This will limit the available versions to what is available in that
+repo.  Currently, this means `v1.8.0` and above.
+
+### `v0.3.x`
+
+[SourceForge][sf-releases] is the new official home of TigerVNC
+artifacts, and it includes all versions that were available at BinTray.
 
 ## TL;DR
 
@@ -83,5 +90,6 @@ asdf tigervnc-java-viewer integrate
 
 [accetto-tigervnc]: https://github.com/accetto/tigervnc
 [bintray]: https://bintray.com 
+[sf-releases]: https://sourceforge.net/projects/tigervnc/files/stable
 
 <!-- vi: set tw=72 et sw=2 fo=tcroqan autoindent: -->
