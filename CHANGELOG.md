@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+* Get releases from Sourceforge, the new official TigerVNC binaries
+  hosting.
+
+### Fixed
+
+* Fix some issues about duplicate and/or missing plugin name prefix in
+  log messages.
+
 ## [0.2.0] - 2021-04-28
 
 ### Changed
