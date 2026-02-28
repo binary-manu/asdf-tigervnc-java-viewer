@@ -1,3 +1,5 @@
+⚠️ Migrated to https://codeberg.org/binary-manu/asdf-tigervnc-java-viewer ⚠️
+
 # An `asdf` plugin that manages TigerVNC Java Viewer versions
 
 [![Test](https://github.com/binary-manu/asdf-tigervnc-java-viewer/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/binary-manu/asdf-tigervnc-java-viewer/actions/workflows/build.yml)
